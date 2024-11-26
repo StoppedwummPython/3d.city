@@ -3,7 +3,13 @@ import { Hub } from './city3d/Hub.js'
 import { View } from './city3d/View.js'
 import { saveAs } from './saveAs.js';
 
-
+PokiSDK.init().then(() => {
+    console.log("Poki SDK successfully initialized");
+    // fire your function to continue to game
+}).catch(() => {
+    console.log("Initialized, something went wrong, load you game anyway");
+    // fire your function to continue to game
+});
 
 var d = document.getElementById('debug');
 const simulation_timestep = 30;
@@ -26,6 +32,9 @@ window.directMessage = null
 window.isWorker = true
 
 window.withHeight = false
+
+// fire loading function here
+PokiSDK.gameLoadingFinished();
 
 export class Main {
 
@@ -110,10 +119,10 @@ export class Main {
         view3d.setTimeColors(id);
     }
 
-    static newMap( t ) {
+    static newMap( t ) {        
 
         if( view3d.inMapGenation ) return;
-
+        await PokiSDK.commercialBreak()
         hub.generate( true );
         withHeight = t!=='NEW';
         view3d.inMapGenation = true;
@@ -122,7 +131,7 @@ export class Main {
     }
 
     static playMap() {
-
+        PokiSDK.gameplayStart();
         hub.initGameHub();
         view3d.startZoom();
         post({tell:"PLAYMAP"});
@@ -334,3 +343,5 @@ function message( e ) {
         makeLoadGame(e.data.key, e.data.isStart);
     }
 }
+
+PokiSDK.gameLoadingFinished();
