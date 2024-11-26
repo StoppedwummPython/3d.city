@@ -3,13 +3,11 @@ import { Hub } from './city3d/Hub.js'
 import { View } from './city3d/View.js'
 import { saveAs } from './saveAs.js';
 
-window.PokiSDK.init().then(() => {
-    console.log("Poki SDK successfully initialized");
-    // fire your function to continue to game
-}).catch(() => {
-    console.log("Initialized, something went wrong, load you game anyway");
-    // fire your function to continue to game
-});
+try {
+    await window.PokiSDK.init()
+} catch (error) {
+    console.log(error)
+}
 
 var d = document.getElementById('debug');
 const simulation_timestep = 30;
