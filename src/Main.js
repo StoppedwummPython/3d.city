@@ -3,7 +3,7 @@ import { Hub } from './city3d/Hub.js'
 import { View } from './city3d/View.js'
 import { saveAs } from './saveAs.js';
 
-PokiSDK.init().then(() => {
+window.PokiSDK.init().then(() => {
     console.log("Poki SDK successfully initialized");
     // fire your function to continue to game
 }).catch(() => {
@@ -34,7 +34,7 @@ window.isWorker = true
 window.withHeight = false
 
 // fire loading function here
-PokiSDK.gameLoadingFinished();
+window.PokiSDK.gameLoadingFinished();
 
 export class Main {
 
@@ -122,7 +122,7 @@ export class Main {
     static newMap( t ) {        
 
         if( view3d.inMapGenation ) return;
-        await PokiSDK.commercialBreak()
+        await window.PokiSDK.commercialBreak()
         hub.generate( true );
         withHeight = t!=='NEW';
         view3d.inMapGenation = true;
@@ -131,7 +131,7 @@ export class Main {
     }
 
     static playMap() {
-        PokiSDK.gameplayStart();
+        window.PokiSDK.gameplayStart();
         hub.initGameHub();
         view3d.startZoom();
         post({tell:"PLAYMAP"});
@@ -344,4 +344,4 @@ function message( e ) {
     }
 }
 
-PokiSDK.gameLoadingFinished();
+window.PokiSDK.gameLoadingFinished();
